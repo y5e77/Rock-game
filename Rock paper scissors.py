@@ -48,15 +48,18 @@ def main():
     while round_number < total_rounds:
         player_choice = input(f"\nRound {round_number + 1} - Your choice: ").strip().lower()
 
+        # Validate input
         if player_choice == "quit":
             break
         elif player_choice not in ["rock", "paper", "scissors"]:
             print("⚠️ Invalid choice! Please choose rock, paper, or scissors.")
             continue
 
+        # Get adaptive computer choice
         computer_choice = get_computer_choice(round_number, last_player_choice)
         print(f"🖥️ Computer chose: {computer_choice}")
 
+        # Determine round winner
         result = determine_winner(player_choice, computer_choice)
 
         if result == "player":
@@ -68,15 +71,19 @@ def main():
         else:
             print("🤝 It's a tie!")
 
+        # Save round summary
         round_history.append(
             f"Round {round_number + 1}: You ({player_choice}) vs Computer ({computer_choice}) -> {result.title()}"
         )
 
+        # Show current score
         print(f"Score -> You: {player_score} | Computer: {computer_score}")
+
+        # Prepare for next round
         last_player_choice = player_choice
         round_number += 1
 
-        # Early win condition (best-of-N)
+        # Early win check for best-of-N
         if player_score > total_rounds // 2 or computer_score > total_rounds // 2:
             break
 
@@ -88,6 +95,7 @@ def main():
     for line in round_history:
         print(" -", line)
 
+    # Final result
     if player_score > computer_score:
         print("\n🎉 Congratulations, you won the match!")
     elif computer_score > player_score:
