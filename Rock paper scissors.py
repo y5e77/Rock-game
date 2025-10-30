@@ -2,12 +2,13 @@ def get_computer_choice(round_number, last_player_choice=None):
     """
     Adaptive computer choice:
     - First round: starts with 'rock'
-    - After that: tries to beat player's last move
+    - After that: tries to beat the player's last move
     """
     if last_player_choice is None:
         return "rock"
     counter_moves = {"rock": "paper", "paper": "scissors", "scissors": "rock"}
     return counter_moves[last_player_choice]
+
 
 def determine_winner(player, computer):
     """Decide the winner based on player and computer choices."""
@@ -20,12 +21,13 @@ def determine_winner(player, computer):
     else:
         return "computer"
 
+
 def main():
     print("🎮 Welcome to Rock, Paper, Scissors!")
     print("Type 'rock', 'paper', or 'scissors' to play.")
     print("Type 'quit' anytime to stop playing.\n")
 
-    # ✅ (1) Added: Best of N mode
+    # Ask for best-of-N setup
     while True:
         try:
             total_rounds = int(input("How many rounds would you like to play (odd number please)? "))
@@ -42,7 +44,7 @@ def main():
     last_player_choice = None
     round_history = []
 
-    # ✅ (2) Main gameplay loop
+    # Main gameplay loop
     while round_number < total_rounds:
         player_choice = input(f"\nRound {round_number + 1} - Your choice: ").strip().lower()
 
@@ -66,7 +68,6 @@ def main():
         else:
             print("🤝 It's a tie!")
 
-        # ✅ (3) Record round summary
         round_history.append(
             f"Round {round_number + 1}: You ({player_choice}) vs Computer ({computer_choice}) -> {result.title()}"
         )
@@ -75,11 +76,11 @@ def main():
         last_player_choice = player_choice
         round_number += 1
 
-        # ✅ (4) Early win condition for best-of-N
+        # Early win condition (best-of-N)
         if player_score > total_rounds // 2 or computer_score > total_rounds // 2:
             break
 
-    # ✅ (5) End of game summary
+    # End of game summary
     print("\n🏁 Game Over!")
     print(f"Final Score -> You: {player_score} | Computer: {computer_score}\n")
 
@@ -95,6 +96,7 @@ def main():
         print("\n🤝 It's an overall tie!")
 
     print("Thanks for playing!")
+
 
 if __name__ == "__main__":
     main()
